@@ -52,7 +52,7 @@ User Query → FastAPI → LangGraph Orchestrator
 
 ```bash
 # Clone repository
-git clone <your-repo-url>
+git clone https://github.com/trayan4/MARA-AI-Agent.git
 cd mara
 
 # Create virtual environment
@@ -367,10 +367,6 @@ python test_setup.py
 - Local vector storage (SQLite + FAISS)
 - File upload validation
 - CORS configurable
-
-## 📝 License
-
-MIT License
 
 ## 🤝 Contributing
 
