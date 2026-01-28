@@ -1,0 +1,23 @@
+{
+  "tools": [
+    {
+      "name": "search",
+      "description": "Search the web for current, real-time information. Use this when you need: (1) Latest news or developments, (2) Current events, (3) Recent information beyond the knowledge cutoff, (4) Today's data or this week/month's updates. Examples: 'latest AI developments', 'current Bitcoin price', 'news today'.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query"
+          },
+          "num_results": {
+            "type": "integer",
+            "description": "Number of search results to retrieve (default: 5)",
+            "default": 5
+          }
+        },
+        "required": ["query"]
+      }
+    }
+  ]
+}

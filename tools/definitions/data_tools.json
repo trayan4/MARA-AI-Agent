@@ -1,0 +1,162 @@
+{
+  "tools": [
+    {
+      "name": "analyze_dataframe",
+      "description": "Perform statistical analysis on a pandas DataFrame. Use this for descriptive statistics, distributions, and data summaries.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "data_path": {
+            "type": "string",
+            "description": "Path to the CSV/Excel file or DataFrame variable name"
+          },
+          "analysis_type": {
+            "type": "string",
+            "enum": ["describe", "correlations", "missing_values", "value_counts", "custom"],
+            "description": "Type of analysis to perform",
+            "default": "describe"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Specific columns to analyze (optional, analyzes all if not specified)"
+          }
+        },
+        "required": ["data_path"]
+      }
+    },
+    {
+      "name": "execute_pandas_code",
+      "description": "Execute custom pandas/numpy code for data manipulation or analysis. Use this when built-in tools don't cover your needs.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Python code to execute (must use pandas/numpy). Variable 'df' will be available."
+          },
+          "data_path": {
+            "type": "string",
+            "description": "Path to data file to load as 'df' (optional)"
+          }
+        },
+        "required": ["code"]
+      }
+    },
+    {
+      "name": "detect_anomalies",
+      "description": "Detect anomalies or outliers in numerical data. Use this to find unusual patterns or data points.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "data_path": {
+            "type": "string",
+            "description": "Path to the data file"
+          },
+          "column": {
+            "type": "string",
+            "description": "Column to analyze for anomalies"
+          },
+          "method": {
+            "type": "string",
+            "enum": ["zscore", "iqr", "isolation_forest"],
+            "description": "Anomaly detection method (default: zscore)",
+            "default": "zscore"
+          },
+          "threshold": {
+            "type": "number",
+            "description": "Threshold for anomaly detection (default: 3 for zscore, 1.5 for iqr)",
+            "default": 3.0
+          }
+        },
+        "required": ["data_path", "column"]
+      }
+    },
+    {
+      "name": "calculate_trends",
+      "description": "Calculate trends and patterns in time-series or sequential data. Use this for growth rates, moving averages, trends.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "data_path": {
+            "type": "string",
+            "description": "Path to the data file"
+          },
+          "time_column": {
+            "type": "string",
+            "description": "Column containing time/date values"
+          },
+          "value_column": {
+            "type": "string",
+            "description": "Column containing values to analyze"
+          },
+          "trend_type": {
+            "type": "string",
+            "enum": ["growth_rate", "moving_average", "linear_trend", "seasonal"],
+            "description": "Type of trend analysis (default: growth_rate)",
+            "default": "growth_rate"
+          },
+          "window": {
+            "type": "integer",
+            "description": "Window size for moving averages (default: 7)",
+            "default": 7
+          }
+        },
+        "required": ["data_path", "value_column"]
+      }
+    },
+    {
+      "name": "group_and_aggregate",
+      "description": "Group data by categories and calculate aggregations. Use this for summaries by category, region, time period, etc.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "data_path": {
+            "type": "string",
+            "description": "Path to the data file"
+          },
+          "group_by": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Columns to group by"
+          },
+          "aggregations": {
+            "type": "object",
+            "description": "Dictionary of column: aggregation_function (e.g., {'sales': 'sum', 'price': 'mean'})"
+          }
+        },
+        "required": ["data_path", "group_by", "aggregations"]
+      }
+    },
+    {
+      "name": "filter_data",
+      "description": "Filter DataFrame based on conditions. Use this to subset data based on criteria.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "data_path": {
+            "type": "string",
+            "description": "Path to the data file"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "column": {"type": "string"},
+                "operator": {"type": "string", "enum": ["==", "!=", ">", "<", ">=", "<=", "in", "not in"]},
+                "value": {"type": ["string", "number", "array"]}
+              }
+            },
+            "description": "List of filter conditions"
+          }
+        },
+        "required": ["data_path", "conditions"]
+      }
+    }
+  ]
+}

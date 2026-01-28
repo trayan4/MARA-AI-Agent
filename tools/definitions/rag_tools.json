@@ -1,0 +1,57 @@
+{
+  "tools": [
+    {
+      "name": "search_documents",
+      "description": "Search through documents using semantic similarity. Use this when you need to find relevant information from stored documents based on a query.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query to find relevant documents"
+          },
+          "top_k": {
+            "type": "integer",
+            "description": "Number of results to return (default: 5)",
+            "default": 5
+          },
+          "use_hybrid": {
+            "type": "boolean",
+            "description": "Use hybrid search combining vector and keyword search (default: true)",
+            "default": true
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "get_document",
+      "description": "Retrieve a specific document by its ID. Use this when you know the exact document you need.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "doc_id": {
+            "type": "string",
+            "description": "The unique identifier of the document"
+          }
+        },
+        "required": ["doc_id"]
+      }
+    },
+    {
+      "name": "list_documents",
+      "description": "List all available documents in the vector store. Use this to see what documents are available.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "Maximum number of documents to return (default: 10)",
+            "default": 10
+          }
+        },
+        "required": []
+      }
+    }
+  ]
+}

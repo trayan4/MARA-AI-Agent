@@ -1,0 +1,88 @@
+{
+  "tools": [
+    {
+      "name": "analyze_image",
+      "description": "Analyze an image and extract insights. Use this for charts, screenshots, diagrams, photos, or any visual content.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "image_path": {
+            "type": "string",
+            "description": "Path to the image file to analyze"
+          },
+          "query": {
+            "type": "string",
+            "description": "Specific question or aspect to focus on in the image (optional)"
+          },
+          "detail_level": {
+            "type": "string",
+            "enum": ["low", "high", "auto"],
+            "description": "Level of detail for analysis (default: high)",
+            "default": "high"
+          }
+        },
+        "required": ["image_path"]
+      }
+    },
+    {
+      "name": "extract_chart_data",
+      "description": "Extract numerical data from charts, graphs, or plots. Use this when you need to get the actual data values from a visualization.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "image_path": {
+            "type": "string",
+            "description": "Path to the chart/graph image"
+          },
+          "chart_type": {
+            "type": "string",
+            "enum": ["bar", "line", "pie", "scatter", "auto"],
+            "description": "Type of chart (auto-detect if not specified)",
+            "default": "auto"
+          }
+        },
+        "required": ["image_path"]
+      }
+    },
+    {
+      "name": "compare_images",
+      "description": "Compare multiple images and identify similarities or differences. Use this for before/after comparisons or visual analysis.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "image_paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of image paths to compare (2-5 images)"
+          },
+          "comparison_aspect": {
+            "type": "string",
+            "description": "Specific aspect to compare (optional)"
+          }
+        },
+        "required": ["image_paths"]
+      }
+    },
+    {
+      "name": "ocr_extract_text",
+      "description": "Extract text from images using OCR. Use this for screenshots, scanned documents, or images with text.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "image_path": {
+            "type": "string",
+            "description": "Path to the image containing text"
+          },
+          "language": {
+            "type": "string",
+            "description": "Language of the text (default: eng)",
+            "default": "eng"
+          }
+        },
+        "required": ["image_path"]
+      }
+    }
+  ]
+}

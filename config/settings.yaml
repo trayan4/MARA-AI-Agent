@@ -1,0 +1,116 @@
+# MARA Configuration File
+
+# LLM Settings
+llm:
+  provider: "openai"
+  model: "gpt-4-turbo-preview"  # or gpt-4o, gpt-4-turbo
+  vision_model: "gpt-4o"
+  temperature: 0.1
+  max_tokens: 4000
+  timeout: 120
+  max_retries: 3
+  retry_delay: 2  # seconds
+
+# Embeddings
+embeddings:
+  model: "BAAI/bge-base-en-v1.5"  # HuggingFace model
+  dimension: 768
+  batch_size: 32
+  max_length: 512
+
+# Vector Store
+vector_store:
+  type: "sqlite"  # sqlite, faiss, or pgvector
+  path: "data/vector_store.db"
+  top_k: 5
+  similarity_threshold: 0.7
+  use_hybrid: true  # Enable BM25 + Vector hybrid search
+  hybrid_alpha: 0.7  # Weight for vector search (0.7 = 70% vector, 30% BM25)
+
+# Chunking Strategy
+chunking:
+  chunk_size: 1000
+  chunk_overlap: 200
+  separators: ["\n\n", "\n", ". ", " ", ""]
+
+# Agent Settings
+agents:
+  planner:
+    max_retries: 3
+    timeout: 60
+    use_meta_planning: false
+  
+  rag:
+    max_chunks: 10
+    rerank: true
+    reranker_model: "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  
+  vision:
+    max_image_size: 4096  # pixels
+    supported_formats: ["png", "jpg", "jpeg", "webp"]
+    detail_level: "high"  # low, high, auto
+  
+  data:
+    max_rows: 100000
+    timeout: 120
+    safe_mode: true  # Restrict dangerous operations
+  
+  critic:
+    confidence_threshold: 0.8
+    hallucination_check: true
+    consistency_check: true
+    citation_validation: true
+    trigger_replan_threshold: 0.3  # Lower threshold - only replan on severe failures
+  
+  report:
+    format: "json"  # json, markdown, html
+    include_evidence: true
+    include_metadata: true
+
+# Orchestration
+orchestration:
+  max_iterations: 10
+  parallel_execution: true
+  timeout: 300  # Total timeout for entire workflow
+
+# Memory Settings
+memory:
+  short_term:
+    enabled: true
+    path: "data/logs/agent_traces.jsonl"
+  
+  long_term:
+    enabled: false
+    path: "data/knowledge_store.db"
+  
+  cache:
+    enabled: true
+    type: "sqlite"  # sqlite or redis
+    path: "data/cache.db"
+    ttl: 3600  # seconds
+
+# API Settings
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  reload: false
+  cors_enabled: true
+  cors_origins: ["*"]
+  rate_limit: 100  # requests per minute
+  auth_enabled: false
+
+# Observability
+observability:
+  logging:
+    level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+    format: "json"
+    path: "data/logs/mara.log"
+  
+  tracing:
+    enabled: false
+    endpoint: "http://localhost:4318"
+  
+  metrics:
+    enabled: false
+    port: 9090
